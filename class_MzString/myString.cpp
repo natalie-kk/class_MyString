@@ -1,6 +1,7 @@
 ﻿#include "myString.h"
 #include <cstring>
 #include <iostream>
+#include <string>
 using namespace std;
 //Розробити клас String, який надалі буде використовуватися для роботи з рядками.
 //Клас повинен містити :
@@ -68,6 +69,54 @@ myString::~myString()
 	count--;
 }
 
+myString::myString(const myString& obj)
+{
+	cout << "Copy construct\n";
+	userLen = obj.userLen;
+	int size = strlen(obj.userString) + 1;
+	userString = new char[size];
+	strcpy_s(userString, size, obj.userString);
+	count++;
+}
+
+myString::myString(myString&& obj)
+{
+	cout << "Move construct\n";
+	userLen = obj.userLen;
+	userString = obj.userString;
+
+	obj.userLen = 0;
+	obj.userString = nullptr;
+	count++;
+}
+
+myString& myString::operator=(const myString& obj)
+{
+	if (this == &obj) 
+		return *this;
+	delete[] userString;
+	cout << "Copy operator=\n";
+	userLen = obj.userLen;
+	int size = strlen(obj.userString) + 1;
+	userString = new char[size];
+	strcpy_s(userString, size, obj.userString);
+	return *this;
+}
+
+myString& myString::operator=(myString&& obj)
+{
+	if (this == &obj)
+		return *this;
+	delete[] userString;
+	cout << "Move operator=\n";
+	userLen = obj.userLen;
+	userString = obj.userString;
+
+	obj.userLen = 0;
+	obj.userString = nullptr;
+	return *this;
+}
+
 void myString::SetLength(int user)
 {
 	userLen = user;
@@ -76,4 +125,24 @@ void myString::SetLength(int user)
 int myString::GetCount()
 {
 	return count;
+}
+
+ostream& operator<<(ostream& os, const myString& obj)
+{
+	os << "UserString: " << obj.userString << endl;
+	os << "String's length: " << obj.userLen << endl;
+	return os;
+}
+
+istream& operator>>(istream& is, myString& obj)
+{
+	string s;
+	cout << "Input your String: ";
+	is >> s; 
+
+	delete[] obj.userString;
+	obj.userLen = static_cast<int>(s.size()) + 1;
+	obj.userString = new char[obj.userLen];
+	strcpy_s(obj.userString, obj.userLen, s.c_str());
+	return is;
 }

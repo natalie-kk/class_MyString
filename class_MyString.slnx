@@ -3,5 +3,5 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
-  <Project Path="class_MzString/class_MzString.vcxproj" />
+  <Project Path="class_MzString/class_MzString.vcxproj" Id="ec1830d8-d66b-4a16-ae71-839e192e8480" />
 </Solution>
