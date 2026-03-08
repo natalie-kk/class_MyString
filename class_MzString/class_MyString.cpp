@@ -37,6 +37,7 @@ int main()
     cout << "arr: " << arr;
     cout << "Copy(arr3=arr2): ";
     Array arr3(arr2);
+    cout << arr3;
 
     srand(time(NULL));
 
