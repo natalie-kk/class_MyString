@@ -33,6 +33,7 @@ int main()
     cout << arr1;
     cout << "Array #3:\n";
     cout << arr2;
+    arr = arr1;
     cout << "Operator= (arr=arr1)" << endl;
     cout << "arr: " << arr;
     cout << "Copy(arr3=arr2): ";
