@@ -94,6 +94,8 @@ inline Array<T>& Array<T>::operator=(Array<T>&& obj)
 	return *this;
 }
 
+
+
 template<typename T>
 ostream& operator<<(ostream& os, const Array<T>& obj)
 {

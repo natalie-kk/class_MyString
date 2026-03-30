@@ -127,6 +127,38 @@ int myString::GetCount()
 	return count;
 }
 
+void myString::MyStrcpy(myString& obj)
+{
+	if (userString)
+		delete[]userString;
+	userLen = strlen(obj.userString);
+	int size = userLen + 1;
+	userString = new char[size];
+	strcpy_s(userString, size, obj.userString);
+}
+
+
+
+int myString::MyFindStr(const char* str) const
+{
+	if (str == nullptr) return -1;
+	if (str[0] == '\0') return 0;
+
+	const char* pos = strstr(userString, str);
+	if (!pos) return -1;
+
+	return (int)(pos - userString);
+}
+
+int myString::MyFindChr(char c)
+{
+	for (int i = 0; i < userLen; i++) {
+		if (userString[i] == c)
+			return i;
+	}
+	return -1;
+}
+
 ostream& operator<<(ostream& os, const myString& obj)
 {
 	os << "UserString: " << obj.userString << endl;
@@ -145,4 +177,66 @@ istream& operator>>(istream& is, myString& obj)
 	obj.userString = new char[obj.userLen];
 	strcpy_s(obj.userString, obj.userLen, s.c_str());
 	return is;
+}
+
+int myString::MyStrLen()
+{
+	userLen = strlen(userString) + 1;
+	return userLen - 1;//el amount
+}
+
+
+myString myString::operator+(const myString& obj) const
+{
+	int len1 = (int)std::strlen(userString);
+	int len2 = (int)std::strlen(obj.userString);
+
+	char* temp = new char[len1 + len2 + 1];
+
+	strcpy_s(temp, len1 + len2 + 1, userString);
+	strcat_s(temp, len1 + len2 + 1, obj.userString);
+
+	myString result(temp);
+	delete[] temp;
+	return result;
+}
+
+myString& myString::operator+=(char ch)
+{
+	char* temp = new char[userLen + 1];
+	for (int i = 0; i < userLen - 1; i++)
+		temp[i] = userString[i];
+	temp[userLen - 1] = ch;
+	temp[userLen] = '\0';
+	delete[]userString;
+	userString = temp;
+	userLen++;
+	return *this;
+
+}
+
+
+char& myString::operator[](const int& index)
+{
+	return userString[index];
+}
+
+const char& myString::operator[](int index) const
+{
+	return userString[index];
+}
+
+bool myString::operator>(const myString& obj) const
+{
+	return strcmp(userString, obj.userString) > 0;
+}
+
+bool myString::operator<(const myString& obj) const
+{
+	return strcmp(userString, obj.userString) < 0;
+}
+
+bool myString::operator==(const myString& obj) const
+{
+	return strcmp(userString, obj.userString) == 0;
 }

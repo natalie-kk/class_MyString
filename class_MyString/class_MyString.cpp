@@ -26,6 +26,17 @@ int main()
     cout << text << endl;
     text = move(userText2);
     cout << text << endl;
+    cout << userText << endl;
+    cout << userText2 << endl;
+    if (userText > userText2)
+        cout << "userText > userText2" << endl;
+    else if (userText < userText2)
+        cout << "userText < userText2" << endl;
+    else
+        cout << "userText == userText2" << endl;
+
+    userText[0] = 'b';
+    cout << userText << endl;
     int size = 5;
     Array<int> arr(size);
     Array<int> arr1(size);
